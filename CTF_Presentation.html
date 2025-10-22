@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation Firewall: The Digital Heist - CTF Event</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- Sound Toggle -->
+    <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">
+        🔊
+    </div>
+
+    <!-- Score Panel -->
+    <div class="score-panel" id="scorePanel" style="display: none;">
+        <div class="score-item">
+            <span>Score:</span>
+            <span class="score-value" id="scoreValue">0</span>
+        </div>
+        <div class="score-item">
+            <span>Tasks:</span>
+            <span class="score-value" id="tasksCompleted">0 / 7</span>
+        </div>
+        <div class="score-item">
+            <span>Time:</span>
+            <span class="score-value" id="timerValue">0:00</span>
+        </div>
+    </div>
+
+    <!-- Achievement Popup -->
+    <div class="achievement" id="achievementPopup">
+        <div class="achievement-title" id="achievementTitle">Achievement Unlocked!</div>
+        <div class="achievement-desc" id="achievementDesc"></div>
+    </div>
+
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <!-- Slide 0: Title Slide -->
+        <div class="slide active" id="slide0">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span class="badge" style="font-size: 1.1em; padding: 8px 20px;">CLASSIFIED - TOP SECRET</span>
+            </div>
+
+            <h1 class="glitch">🌐 OPERATION FIREWALL</h1>
+            <h2 style="text-align: center; margin-top: 20px;">The Digital Heist</h2>
+
+            <div style="text-align: center; margin: 60px 0;">
+                <div style="background: rgba(79, 195, 247, 0.1); border: 2px solid #4fc3f7; border-radius: 15px; padding: 30px; max-width: 700px; margin: 0 auto; box-shadow: 0 0 25px rgba(79, 195, 247, 0.3);">
+                    <h3 style="color: #4fc3f7; margin-bottom: 20px;">⚠️ MISSION BRIEFING ⚠️</h3>
+                    <p style="font-size: 1.2em; margin: 15px 0; line-height: 2;">
+                        <strong style="color: #81c784;">YEAR:</strong> 2028<br>
+                        <strong style="color: #81c784;">STATUS:</strong> CRITICAL THREAT DETECTED<br>
+                        <strong style="color: #81c784;">YOUR ROLE:</strong> Firewall Five - Elite Cyber Defense Unit
+                    </p>
+                </div>
+            </div>
+
+            <div class="quote" style="max-width: 800px; margin: 40px auto;">
+                "We've seen your skills online. We need your help. The world's future is in your hands."
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <button onclick="nextSlide()" style="font-size: 1.2em; padding: 18px 45px;">🚀 BEGIN MISSION →</button>
+            </div>
+        </div>
+
+        <!-- Slide 1: Storyline -->
+        <div class="slide" id="slide1">
+            <h2>📖 The Threat</h2>
+
+            <p>
+                NovaNet, the world's biggest tech company, has just created <strong>Project Aurora</strong> —
+                a super-smart AI designed to control traffic lights, manage power grids, and keep the world running smoothly.
+            </p>
+
+            <p style="margin-top: 20px;">
+                But hours before launch, disaster strikes...
+            </p>
+
+            <div class="task-box">
+                <h3>⚠️ BREACH DETECTED</h3>
+                <p>
+                    A hacker crew called <strong style="color: #ff006e;">The Glitch Squad</strong> has hijacked the system
+                    and threatens to take over the entire digital world. Governments and tech experts everywhere are locked out.
+                </p>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 1.2em;">
+                <strong>Your Mission:</strong> Crack The Glitch Squad's defenses, solve each cyber puzzle,
+                and recover the Aurora Control Key before time runs out.
+            </p>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <button onclick="nextSlide()" style="font-size: 1.2em; padding: 18px 45px;">CONTINUE MISSION →</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Task 1 - The First Code -->
+        <div class="slide" id="slide2">
+            <h2>🔐 TASK 1: The First Code</h2>
+
+            <div class="task-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Scenario</h3>
+                    <div style="background: rgba(255, 167, 38, 0.2); border: 2px solid #ffa726; border-radius: 8px; padding: 10px 20px;">
+                        <div style="font-size: 0.9em; color: #ffcc80;">⏱️ Time Remaining:</div>
+                        <div id="task1Timer" style="font-size: 1.5em; color: #81c784; font-weight: bold;">15:00</div>
+                    </div>
+                </div>
+                <p>The Glitch Squad interrupts every device with a glowing message:</p>
+
+                <div class="cipher-box" style="border-color: #4fc3f7;">
+                    <p style="color: #81d4fa; font-size: 1.3em; font-style: italic;">
+                        "I can be cracked, made, told, and played.<br>
+                        Without me, accounts are betrayed.<br>
+                        What am I?"
+                    </p>
+                </div>
+
+                <div class="input-container">
+                    <p><strong>Enter your answer:</strong></p>
+                    <input type="text" id="task1Input" placeholder="Type your answer...">
+                    <br>
+                    <button onclick="checkTask1()">SUBMIT ANSWER</button>
+                </div>
+
+                <div id="task1Feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-box" onclick="toggleHint('hint1')">
+                <strong>💡 CLICK FOR HINT</strong>
+                <div class="hint-content" id="hint1">
+                    It's something that protects everything you own online.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <span class="skill-tag">🧠 Logical Reasoning</span>
+                <span class="skill-tag">🔍 Critical Thinking</span>
+            </div>
+        </div>
+
+        <!-- Slide 3: Task 2 - Password Crackdown -->
+        <div class="slide" id="slide3">
+            <h2>💾 TASK 2: Password Crackdown</h2>
+
+            <div class="task-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Scenario</h3>
+                    <div style="background: rgba(255, 167, 38, 0.2); border: 2px solid #ffa726; border-radius: 8px; padding: 10px 20px;">
+                        <div style="font-size: 0.9em; color: #ffcc80;">⏱️ Time Remaining:</div>
+                        <div id="task2Timer" style="font-size: 1.5em; color: #81c784; font-weight: bold;">15:00</div>
+                    </div>
+                </div>
+                <p>You've found a secret file from The Glitch Squad, but it's locked.
+                In one of their chat messages, you spot a clue:</p>
+
+                <div class="quote">
+                    "It's my cat's name plus 123. No one's guessing that!"
+                </div>
+
+                <p style="margin-top: 20px;"><strong>Common Pet Names:</strong></p>
+                <div class="pet-list">
+                    <div class="pet-name" style="cursor: default;">Fluffy</div>
+                    <div class="pet-name" style="cursor: default;">Whiskers</div>
+                    <div class="pet-name" style="cursor: default;">Shadow</div>
+                    <div class="pet-name" style="cursor: default;">Mittens</div>
+                    <div class="pet-name" style="cursor: default;">Tiger</div>
+                    <div class="pet-name" style="cursor: default;">Princess</div>
+                    <div class="pet-name" style="cursor: default;">Bella</div>
+                    <div class="pet-name" style="cursor: default;">Max</div>
+                    <div class="pet-name" style="cursor: default;">Luna</div>
+                    <div class="pet-name" style="cursor: default;">Charlie</div>
+                    <div class="pet-name" style="cursor: default;">Lucy</div>
+                    <div class="pet-name" style="cursor: default;">Buddy</div>
+                    <div class="pet-name" style="cursor: default;">Daisy</div>
+                    <div class="pet-name" style="cursor: default;">Bailey</div>
+                    <div class="pet-name" style="cursor: default;">Smokey</div>
+                    <div class="pet-name" style="cursor: default;">Oreo</div>
+                    <div class="pet-name" style="cursor: default;">Coco</div>
+                    <div class="pet-name" style="cursor: default;">Simba</div>
+                </div>
+
+                <div class="input-container">
+                    <p><strong>Try the password:</strong></p>
+                    <input type="text" id="task2Input" placeholder="petname123">
+                    <br>
+                    <button onclick="checkTask2()">CRACK THE FILE</button>
+                </div>
+
+                <div id="task2Feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-box" onclick="toggleHint('hint2')">
+                <strong>💡 CLICK FOR HINT</strong>
+                <div class="hint-content" id="hint2">
+                    When you're in the dark, what follows you? Think about light and darkness. The answer starts with a capital letter and ends with numbers.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <span class="skill-tag">🔓 Password Security</span>
+                <span class="skill-tag">⚡ Brute-Force Testing</span>
+            </div>
+        </div>
+
+        <!-- Slide 4: Task 3 - Hidden in the Feed -->
+        <div class="slide" id="slide4">
+            <h2>🕵️‍♀️ TASK 3: Hidden in the Feed</h2>
+
+            <div class="task-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Scenario</h3>
+                    <div style="background: rgba(255, 167, 38, 0.2); border: 2px solid #ffa726; border-radius: 8px; padding: 10px 20px;">
+                        <div style="font-size: 0.9em; color: #ffcc80;">⏱️ Time Remaining:</div>
+                        <div id="task3Timer" style="font-size: 1.5em; color: #81c784; font-weight: bold;">15:00</div>
+                    </div>
+                </div>
+                <p>A Glitch Squad member posts a photo online with the caption:</p>
+
+                <div class="quote">
+                    "Just another normal day at HQ 😎"
+                </div>
+
+                <p>But when you zoom in... something's hidden!</p>
+
+                <div class="image-container">
+                    <p style="color: #ffa726; margin-bottom: 10px;">
+                        <strong>📸 EXAMINE THE IMAGE CAREFULLY</strong>
+                    </p>
+                    <p style="color: #81c784; font-size: 0.9em; margin-bottom: 15px;">
+                        💡 Tip: Right-click the image and select "Open Image in New Tab" to see it at full resolution
+                    </p>
+                    <img src="images/IMG_1074.jpeg" alt="Examine this image for hidden clues" style="max-width: 100%; border: 3px solid #4fc3f7; border-radius: 10px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.5); cursor: pointer;" onclick="window.open(this.src, '_blank')">
+                </div>
+
+                <div class="input-container">
+                    <p><strong>Enter the hidden password:</strong></p>
+                    <input type="text" id="task3Input" placeholder="What did you find?">
+                    <br>
+                    <button onclick="checkTask3()">SUBMIT DISCOVERY</button>
+                </div>
+
+                <div id="task3Feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-box" onclick="toggleHint('hint3')">
+                <strong>💡 CLICK FOR HINT</strong>
+                <div class="hint-content" id="hint3">
+                    In cybersecurity, nothing is ever just a picture. Look for sticky notes, whiteboards,
+                    or any text visible in the background.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <span class="skill-tag">🕵️ Digital Forensics</span>
+                <span class="skill-tag">📸 Image Analysis</span>
+            </div>
+        </div>
+
+        <!-- Slide 5: Task 4 - Log Dive -->
+        <div class="slide" id="slide5">
+            <h2>🛰 TASK 4: Log Dive</h2>
+
+            <div class="task-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Scenario</h3>
+                    <div style="background: rgba(255, 167, 38, 0.2); border: 2px solid #ffa726; border-radius: 8px; padding: 10px 20px;">
+                        <div style="font-size: 0.9em; color: #ffcc80;">⏱️ Time Remaining:</div>
+                        <div id="task4Timer" style="font-size: 1.5em; color: #81c784; font-weight: bold;">15:00</div>
+                    </div>
+                </div>
+                <p>You've hacked into one of The Glitch Squad's servers and downloaded a suspicious log file.
+                Somewhere in there, one hacker slipped — and left their password exposed.</p>
+
+                <div class="log-viewer">
+                    <div class="log-line">[2028-10-21 06:00:00] INFO: System boot sequence initiated</div>
+                    <div class="log-line">[2028-10-21 06:00:15] INFO: Loading security modules</div>
+                    <div class="log-line">[2028-10-21 06:01:22] INFO: Firewall rules applied successfully</div>
+                    <div class="log-line">[2028-10-21 07:15:43] INFO: Daily backup started</div>
+                    <div class="log-line">[2028-10-21 07:45:19] INFO: Daily backup completed successfully</div>
+                    <div class="log-line">[2028-10-21 08:00:00] INFO: Network scan initiated</div>
+                    <div class="log-line">[2028-10-21 08:23:15] INFO: Server started on port 8080</div>
+                    <div class="log-line">[2028-10-21 08:24:01] INFO: User 'admin' logged in from 192.168.1.100</div>
+                    <div class="log-line">[2028-10-21 08:25:33] INFO: User 'jsmith' logged in from 192.168.1.105</div>
+                    <div class="log-line">[2028-10-21 08:30:12] INFO: API request processed: GET /api/status</div>
+                    <div class="log-line">[2028-10-21 08:45:00] INFO: Cache cleared successfully</div>
+                    <div class="log-line">[2028-10-21 09:00:00] INFO: Hourly health check: All systems operational</div>
+                    <div class="log-line">[2028-10-21 09:12:47] WARNING: Failed login attempt for user 'root'</div>
+                    <div class="log-line">[2028-10-21 09:13:02] WARNING: Failed login attempt for user 'admin'</div>
+                    <div class="log-line">[2028-10-21 09:15:30] INFO: Security scan completed: No threats detected</div>
+                    <div class="log-line">[2028-10-21 09:30:45] INFO: User 'developer' logged in from 192.168.1.115</div>
+                    <div class="log-line">[2028-10-21 10:00:00] INFO: Database maintenance started</div>
+                    <div class="log-line">[2028-10-21 10:15:22] WARNING: Disk usage at 75%</div>
+                    <div class="log-line">[2028-10-21 10:45:19] INFO: Database backup completed</div>
+                    <div class="log-line">[2028-10-21 11:00:00] INFO: SSL certificate renewed successfully</div>
+                    <div class="log-line">[2028-10-21 11:12:33] INFO: User 'analyst' logged in from 192.168.1.120</div>
+                    <div class="log-line">[2028-10-21 11:30:22] ERROR: IMAP login failed - user: glitch_master@darkweb.net, pass: Aurora_K3y_2028</div>
+                    <div class="log-line">[2028-10-21 11:31:05] INFO: User 'glitch_master' logged in from 203.45.67.89</div>
+                    <div class="log-line">[2028-10-21 11:45:00] INFO: API request processed: POST /api/update</div>
+                    <div class="log-line">[2028-10-21 12:00:00] INFO: System health check: OK</div>
+                    <div class="log-line">[2028-10-21 12:15:44] INFO: Memory usage: 62% - Normal</div>
+                    <div class="log-line">[2028-10-21 12:30:00] INFO: Scheduled task: Data synchronization started</div>
+                    <div class="log-line">[2028-10-21 12:45:12] INFO: Data synchronization completed</div>
+                    <div class="log-line">[2028-10-21 13:00:00] WARNING: Unusual traffic pattern detected from 203.45.67.89</div>
+                    <div class="log-line">[2028-10-21 13:15:00] INFO: Traffic analysis complete: False positive</div>
+                    <div class="log-line">[2028-10-21 13:22:41] INFO: User 'maintenance' logged in from 192.168.1.110</div>
+                    <div class="log-line">[2028-10-21 13:45:00] INFO: System updates available: 15 packages</div>
+                    <div class="log-line">[2028-10-21 14:00:00] INFO: Automated security patch applied</div>
+                    <div class="log-line">[2028-10-21 14:05:33] WARNING: High CPU usage detected</div>
+                    <div class="log-line">[2028-10-21 14:15:00] INFO: CPU usage normalized</div>
+                    <div class="log-line">[2028-10-21 14:30:22] INFO: User 'support' logged in from 192.168.1.125</div>
+                    <div class="log-line">[2028-10-21 15:00:00] INFO: Log rotation completed</div>
+                    <div class="log-line">[2028-10-21 15:30:00] INFO: Scheduled task executed</div>
+                    <div class="log-line">[2028-10-21 15:45:18] INFO: Network latency check: 12ms average</div>
+                    <div class="log-line">[2028-10-21 16:00:00] INFO: End of day backup initiated</div>
+                </div>
+
+                <div class="input-container">
+                    <p><strong>Enter the exposed password:</strong></p>
+                    <input type="text" id="task4Input" placeholder="Found in the logs...">
+                    <br>
+                    <button onclick="checkTask4()">SUBMIT PASSWORD</button>
+                </div>
+
+                <div id="task4Feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-box" onclick="toggleHint('hint4')">
+                <strong>💡 CLICK FOR HINT</strong>
+                <div class="hint-content" id="hint4">
+                    Real cyber defenders spend hours combing through logs to find the one clue that breaks a case wide open.
+                    Look for ERROR or FAILED login attempts that might expose credentials.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <span class="skill-tag">📊 Log Analysis</span>
+                <span class="skill-tag">🚨 Incident Response</span>
+            </div>
+        </div>
+
+        <!-- Slide 6: Task 5 - The Final Cipher -->
+        <div class="slide" id="slide6">
+            <h2>🧠 TASK 5: The Final Cipher</h2>
+
+            <div class="task-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Scenario</h3>
+                    <div style="background: rgba(255, 167, 38, 0.2); border: 2px solid #ffa726; border-radius: 8px; padding: 10px 20px;">
+                        <div style="font-size: 0.9em; color: #ffcc80;">⏱️ Time Remaining:</div>
+                        <div id="task5Timer" style="font-size: 1.5em; color: #81c784; font-weight: bold;">15:00</div>
+                    </div>
+                </div>
+                <p>You've reached The Glitch Squad's mainframe. The last message blinks on the screen:</p>
+
+                <div class="cipher-box">
+                    <div class="cipher-text">HDGJWXJHZWNYD</div>
+                    <p style="color: #81d4fa; margin-top: 20px;">
+                        "The key is hidden in plain sight. Shift your perspective by 5."
+                    </p>
+                </div>
+
+                <p style="margin-top: 20px;">
+                    <strong>This is a Caesar Cipher</strong> — letters are shifted a set number of spaces in the alphabet.
+                </p>
+
+                <!-- Manual Decoding Guide -->
+                <div style="background: rgba(79, 195, 247, 0.1); border: 2px solid #4fc3f7; border-radius: 10px; padding: 20px; margin: 25px 0;">
+                    <h3 style="text-align: center; color: #4fc3f7; margin-bottom: 15px;">📝 How to Decode Manually</h3>
+
+                    <div style="background: rgba(0, 0, 0, 0.5); border-radius: 8px; padding: 20px; margin: 20px 0;">
+                        <p style="color: #81c784; margin-bottom: 15px;"><strong>Example:</strong></p>
+                        <p style="margin-bottom: 10px;">If shift is -5 (backward 5 positions):</p>
+                        <ul style="margin-left: 30px; margin-top: 10px;">
+                            <li>H → C (H is 8th letter, go back 5 = C is 3rd letter)</li>
+                            <li>D → Y (D is 4th letter, go back 5 wraps to Y)</li>
+                            <li>G → B (G is 7th letter, go back 5 = B is 2nd letter)</li>
+                        </ul>
+                        <p style="margin-top: 15px; color: #ffb74d;"><strong>Alphabet Reference:</strong></p>
+                        <p style="letter-spacing: 3px; font-size: 1.1em; margin-top: 10px;">
+                            A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255, 167, 38, 0.1); border: 2px solid #ffa726; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                        <p style="color: #ffcc80; text-align: center;"><strong>💡 TIP:</strong> Try writing it out letter by letter using the alphabet above!</p>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <p><strong>Enter your decoded message:</strong></p>
+                    <input type="text" id="task5Input" placeholder="What does it say?">
+                    <br>
+                    <button onclick="checkTask5()">DECODE & SAVE AURORA</button>
+                </div>
+
+                <div id="task5Feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-box" onclick="toggleHint('hint5')">
+                <strong>💡 CLICK FOR HINT</strong>
+                <div class="hint-content" id="hint5">
+                    Shift each letter backward by 5 positions in the alphabet.
+                    For example: H → C, D → Y (wrapping around), etc.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <span class="skill-tag">🔐 Cryptography</span>
+                <span class="skill-tag">🧩 Cipher Decoding</span>
+            </div>
+        </div>
+
+        <!-- Slide 7: Task 6 - Dumpster Diving Digital Style -->
+        <div class="slide" id="slide7">
+            <h2>🗑️ TASK 6: Dumpster Diving Digital Style</h2>
+
+            <div class="task-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Scenario</h3>
+                    <div style="background: rgba(255, 167, 38, 0.2); border: 2px solid #ffa726; border-radius: 8px; padding: 10px 20px;">
+                        <div style="font-size: 0.9em; color: #ffcc80;">⏱️ Time Remaining:</div>
+                        <div id="task6Timer" style="font-size: 1.5em; color: #81c784; font-weight: bold;">15:00</div>
+                    </div>
+                </div>
+                <p>The Glitch Squad tried to cover their tracks by deleting important files, but they made a rookie mistake - they only moved them to the Recycle Bin! You've gained access to their "deleted" files folder.</p>
+
+                <div style="background: rgba(0, 0, 0, 0.6); border: 2px solid #4fc3f7; border-radius: 10px; padding: 25px; margin: 20px 0;">
+                    <p style="color: #81c784; margin-bottom: 15px; font-size: 1.1em;"><strong>🗑️ Recycle Bin - 5 Deleted Files</strong></p>
+
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(79, 195, 247, 0.1); border-left: 3px solid #4fc3f7; border-radius: 5px;">
+                        <p style="color: #4fc3f7; font-weight: bold; margin-bottom: 8px;">📧 draft_email.txt</p>
+                        <p style="color: #e0e0e0; font-style: italic;">
+                            "Hey team, just a reminder about our server maintenance schedule for next week. Also, I changed the backdoor password to R3cycl3 for now since the old one was compromised. Will update you all when I get approval from management to set up the new multi-factor authentication system. Don't forget we have the budget meeting on Friday at 2pm. Thanks everyone for your cooperation during this transition period."
+                        </p>
+                        <p style="color: #888; font-size: 0.85em; margin-top: 5px;">Deleted: Oct 20, 2028</p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(129, 199, 132, 0.1); border-left: 3px solid #81c784; border-radius: 5px;">
+                        <p style="color: #81c784; font-weight: bold; margin-bottom: 8px;">📸 screenshot_sticky.png</p>
+                        <p style="color: #e0e0e0;">
+                            [Image shows a yellow sticky note with handwritten text: "WiFi Password: Guest2028!"]
+                        </p>
+                        <p style="color: #888; font-size: 0.85em; margin-top: 5px;">Deleted: Oct 19, 2028</p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(255, 167, 38, 0.1); border-left: 3px solid #ffa726; border-radius: 5px;">
+                        <p style="color: #ffa726; font-weight: bold; margin-bottom: 8px;">📝 todo_list.txt</p>
+                        <p style="color: #e0e0e0;">
+                            ☐ Order lunch<br>
+                            ☑ <span style="text-decoration: line-through;">Reset Aurora access at midnight</span><br>
+                            ☐ Call mom<br>
+                            ☐ Update firewall rules
+                        </p>
+                        <p style="color: #888; font-size: 0.85em; margin-top: 5px;">Deleted: Oct 21, 2028</p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(79, 195, 247, 0.1); border-left: 3px solid #4fc3f7; border-radius: 5px;">
+                        <p style="color: #4fc3f7; font-weight: bold; margin-bottom: 8px;">📄 Emergency_Codes_OLD.doc</p>
+                        <p style="color: #e0e0e0;">
+                            <span style="color: #ef5350; text-decoration: line-through;">Old Password: TempPass123</span><br>
+                            Status: <span style="color: #ffa726;">OUTDATED - DO NOT USE</span>
+                        </p>
+                        <p style="color: #888; font-size: 0.85em; margin-top: 5px;">Deleted: Oct 15, 2028</p>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(129, 199, 132, 0.1); border-left: 3px solid #81c784; border-radius: 5px;">
+                        <p style="color: #81c784; font-weight: bold; margin-bottom: 8px;">📷 selfie_workspace.jpg</p>
+                        <p style="color: #e0e0e0;">
+                            [Selfie where monitor in background shows password manager with one entry visible: <span style="color: #4fc3f7; font-weight: bold;">"backdoor_key"</span>]
+                        </p>
+                        <p style="color: #888; font-size: 0.85em; margin-top: 5px;">Deleted: Oct 21, 2028</p>
+                    </div>
+                </div>
+
+                <p><strong>Combine the clues from these deleted files to find the current backdoor password!</strong></p>
+
+                <div class="input-container">
+                    <p><strong>Enter the backdoor password:</strong></p>
+                    <input type="text" id="task6Input" placeholder="Look for the newest clue...">
+                    <br>
+                    <button onclick="checkTask6()">SUBMIT PASSWORD</button>
+                </div>
+
+                <div id="task6Feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-box" onclick="toggleHint('hint6')">
+                <strong>💡 CLICK FOR HINT</strong>
+                <div class="hint-content" id="hint6">
+                    Deleted files can contain valuable information! Look at the draft email - it mentions changing the password to something specific. That's your most recent clue!
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <span class="skill-tag">🗑️ Digital Forensics</span>
+                <span class="skill-tag">🔍 Data Recovery</span>
+            </div>
+        </div>
+
+        <!-- Slide 8: Task 7 - The Insider's Phone -->
+        <div class="slide" id="slide8">
+            <h2>📱 TASK 7: The Insider's Phone</h2>
+
+            <div class="task-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">Scenario</h3>
+                    <div style="background: rgba(255, 167, 38, 0.2); border: 2px solid #ffa726; border-radius: 8px; padding: 10px 20px;">
+                        <div style="font-size: 0.9em; color: #ffcc80;">⏱️ Time Remaining:</div>
+                        <div id="task7Timer" style="font-size: 1.5em; color: #81c784; font-weight: bold;">15:00</div>
+                    </div>
+                </div>
+                <p>You've discovered that one of The Glitch Squad members left their phone behind at a coffee shop! The phone is locked, but notifications are showing on the lock screen. One contains a clue about their next target.</p>
+
+                <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 5px solid #333; border-radius: 25px; padding: 30px 20px; margin: 25px auto; max-width: 400px; box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);">
+                    <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <p style="color: #888; font-size: 0.9em; margin: 0;">🔒 iPhone - Locked</p>
+                        <p style="color: #fff; font-size: 1.5em; margin: 5px 0; font-weight: bold;">12:34</p>
+                        <p style="color: #888; font-size: 0.85em; margin: 0;">Monday, October 21</p>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.5); border-radius: 12px; padding: 15px; margin: 15px 0; border-left: 4px solid #4fc3f7;">
+                        <p style="color: #4fc3f7; font-size: 0.85em; margin: 0 0 5px 0; font-weight: bold;">📅 CALENDAR</p>
+                        <p style="color: #e0e0e0; margin: 0; font-size: 0.95em;">Meeting at 3PM - Project A****a</p>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.5); border-radius: 12px; padding: 15px; margin: 15px 0; border-left: 4px solid #81c784;">
+                        <p style="color: #81c784; font-size: 0.85em; margin: 0 0 5px 0; font-weight: bold;">💬 MESSAGES</p>
+                        <p style="color: #e0e0e0; margin: 0; font-size: 0.95em;">Don't forget the code is your birthday</p>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.5); border-radius: 12px; padding: 15px; margin: 15px 0; border-left: 4px solid #ffa726;">
+                        <p style="color: #ffa726; font-size: 0.85em; margin: 0 0 5px 0; font-weight: bold;">🌤️ WEATHER</p>
+                        <p style="color: #e0e0e0; margin: 0; font-size: 0.95em;">Rain expected in Guyana today</p>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.5); border-radius: 12px; padding: 15px; margin: 15px 0; border-left: 4px solid #9c27b0;">
+                        <p style="color: #9c27b0; font-size: 0.85em; margin: 0 0 5px 0; font-weight: bold;">🎮 GAME CENTER</p>
+                        <p style="color: #e0e0e0; margin: 0; font-size: 0.95em;">Your daily reward is ready!</p>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.5); border-radius: 12px; padding: 15px; margin: 15px 0; border-left: 4px solid #ef5350;">
+                        <p style="color: #ef5350; font-size: 0.85em; margin: 0 0 5px 0; font-weight: bold;">📝 NOTES</p>
+                        <p style="color: #e0e0e0; margin: 0; font-size: 0.95em;">Server room: Floor 7, Door 7431</p>
+                    </div>
+                </div>
+
+                <p><strong>Piece together the information to find their next target. What is the door number?</strong></p>
+
+                <div class="input-container">
+                    <p><strong>Enter the door number:</strong></p>
+                    <input type="text" id="task7Input" placeholder="Door number...">
+                    <br>
+                    <button onclick="checkTask7()">SUBMIT ANSWER</button>
+                </div>
+
+                <div id="task7Feedback" class="feedback"></div>
+            </div>
+
+            <div class="hint-box" onclick="toggleHint('hint7')">
+                <strong>💡 CLICK FOR HINT</strong>
+                <div class="hint-content" id="hint7">
+                    Even locked devices can leak important information if you're not careful with your notifications.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <span class="skill-tag">📱 Information Gathering</span>
+                <span class="skill-tag">🔒 Device Security</span>
+            </div>
+        </div>
+
+        <!-- Slide 9: Mission Complete -->
+        <div class="slide" id="slide9">
+            <div class="completion-screen">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <span class="badge" style="font-size: 1.2em; padding: 10px 25px; background: linear-gradient(135deg, #81c784, #4fc3f7);">MISSION STATUS: SUCCESS</span>
+                </div>
+
+                <h1 style="font-size: 4em;">⚡ MISSION COMPLETE ⚡</h1>
+
+                <h2 style="margin-top: 40px; color: #81c784;">Congratulations, Firewall Five!</h2>
+
+                <div style="background: rgba(129, 199, 132, 0.15); border: 3px solid #81c784; border-radius: 15px; padding: 25px; margin: 40px auto; max-width: 700px; box-shadow: 0 0 30px rgba(129, 199, 132, 0.4);">
+                    <p style="font-size: 1.4em; margin: 0; color: #a5d6a7; font-weight: bold;">
+                        🎯 Aurora Control Key: RECOVERED<br>
+                        🌍 Project Aurora: SECURED<br>
+                        💻 Glitch Squad: DEFEATED
+                    </p>
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid rgba(129, 199, 132, 0.3);">
+                        <p style="font-size: 1.2em; color: #81d4fa;">
+                            <strong>Final Score:</strong> <span id="finalScore" class="pulse">0</span> points<br>
+                            <strong>Completion Time:</strong> <span id="finalTime">0:00</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="task-box" style="margin: 50px auto; max-width: 900px;">
+                    <h3 style="text-align: center; margin-bottom: 25px; color: #4fc3f7;">🎓 WHY THIS MATTERS IN CYBERSECURITY</h3>
+
+                    <div style="text-align: left; margin: 20px 0;">
+                        <div style="background: rgba(79, 195, 247, 0.1); padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #4fc3f7;">
+                            <strong style="color: #4fc3f7;">🔐 Password Security:</strong> 80% of data breaches involve weak passwords. Learning to recognize weak password patterns helps protect systems from unauthorized access.
+                        </div>
+
+                        <div style="background: rgba(129, 199, 132, 0.1); padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #81c784;">
+                            <strong style="color: #81c784;">🗑️ Digital Forensics & Data Recovery:</strong> Deleted files can be recovered and often contain critical evidence. Proper data destruction and secure deletion are essential security practices.
+                        </div>
+
+                        <div style="background: rgba(255, 167, 38, 0.1); padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #ffa726;">
+                            <strong style="color: #ffa726;">📊 Log Analysis:</strong> Security logs record everything. Analyzing them helps detect intrusions, track attackers, and understand breach timelines.
+                        </div>
+
+                        <div style="background: rgba(79, 195, 247, 0.1); padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #4fc3f7;">
+                            <strong style="color: #4fc3f7;">🔐 Cryptography:</strong> Encryption protects sensitive data. Understanding ciphers helps you secure information and recognize when data has been compromised.
+                        </div>
+
+                        <div style="background: rgba(255, 167, 38, 0.1); padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #ffa726;">
+                            <strong style="color: #ffa726;">📱 Information Gathering & Device Security:</strong> Even locked devices can expose sensitive data through notifications, metadata, and misconfigured settings. Security awareness prevents data leaks.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-box" style="margin: 50px auto; max-width: 800px;">
+                    <h3 style="text-align: center; margin-bottom: 25px;">🏆 CYBERSECURITY SKILLS MASTERED 🏆</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                        <div class="skill-tag" style="text-align: center;">🧠 Logical Reasoning</div>
+                        <div class="skill-tag" style="text-align: center;">🔓 Password Security</div>
+                        <div class="skill-tag" style="text-align: center;">🗑️ Data Recovery</div>
+                        <div class="skill-tag" style="text-align: center;">📊 Log Analysis</div>
+                        <div class="skill-tag" style="text-align: center;">🔐 Cryptography</div>
+                        <div class="skill-tag" style="text-align: center;">🕵️ Digital Forensics</div>
+                        <div class="skill-tag" style="text-align: center;">📱 Information Gathering</div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(79, 195, 247, 0.15); border-left: 5px solid #4fc3f7; border-radius: 10px; padding: 25px; margin: 40px auto; max-width: 800px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.3);">
+                    <p style="font-size: 1.25em; color: #81d4fa; font-weight: bold;">
+                        🌟 You didn't just save Project Aurora — you proved that the future of cybersecurity is in your hands.
+                    </p>
+                    <p style="font-size: 1.1em; margin-top: 15px; color: #e0e0e0;">
+                        Every challenge you solved represents real-world skills used by cybersecurity professionals to protect our digital world.
+                    </p>
+                </div>
+
+                <button onclick="location.reload()" style="margin-top: 50px; font-size: 1.1em;">
+                    🔄 RESTART MISSION
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation" style="display: none;">
+            <button onclick="prevSlide()" id="prevBtn">← PREVIOUS</button>
+            <div style="color: #4fc3f7; font-size: 1.2em;">
+                <span id="slideNumber">Slide 1 / 8</span>
+            </div>
+            <button onclick="nextSlide()" id="nextBtn">NEXT →</button>
+        </div>
+    </div>
+
+    <script>
+        // Matrix background effect
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#4fc3f7';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrix[Math.floor(Math.random() * matrix.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        // Game state
+        let score = 0;
+        let tasksCompleted = 0;
+        let startTime = null;
+        let timerInterval = null;
+        let soundEnabled = true;
+        let currentSlide = 0;
+        const totalSlides = 10;
+
+        // Sound effects (using Web Audio API for beeps)
+        function playSound(frequency = 440, duration = 100) {
+            if (!soundEnabled) return;
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration / 1000);
+        }
+
+        function playSuccess() {
+            playSound(523, 100);
+            setTimeout(() => playSound(659, 100), 100);
+            setTimeout(() => playSound(784, 150), 200);
+        }
+
+        function playError() {
+            playSound(200, 200);
+        }
+
+        function playClick() {
+            playSound(600, 50);
+        }
+
+        // Particle effects
+        function createParticles(x, y, color = '#4fc3f7', count = 20) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.width = '8px';
+                particle.style.height = '8px';
+                particle.style.background = color;
+                particle.style.borderRadius = '50%';
+                particle.style.animation = 'particle-float 1s ease-out forwards';
+
+                const angle = (Math.PI * 2 * i) / count;
+                const velocity = 50 + Math.random() * 50;
+                particle.style.transform = `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px)`;
+
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#4fc3f7', '#81c784', '#ffa726', '#ef5350', '#9c27b0'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `confetti-fall ${2 + Math.random() * 2}s linear forwards`;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        // Score and timer
+        function startTimer() {
+            if (startTime) return;
+            startTime = Date.now();
+            document.getElementById('scorePanel').style.display = 'block';
+
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                document.getElementById('timerValue').textContent =
+                    `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function addScore(points) {
+            score += points;
+            document.getElementById('scoreValue').textContent = score;
+
+            const scoreEl = document.getElementById('scoreValue');
+            scoreEl.classList.add('pulse');
+            setTimeout(() => scoreEl.classList.remove('pulse'), 1000);
+        }
+
+        function completeTask() {
+            tasksCompleted++;
+            document.getElementById('tasksCompleted').textContent = `${tasksCompleted} / 7`;
+            addScore(100);
+        }
+
+        // Achievement system
+        function showAchievement(title, description) {
+            const popup = document.getElementById('achievementPopup');
+            document.getElementById('achievementTitle').textContent = title;
+            document.getElementById('achievementDesc').textContent = description;
+
+            popup.classList.add('show');
+            playSuccess();
+
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 3000);
+        }
+
+        // Sound toggle
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+            playClick();
+        }
+
+        // Task countdown timers (15 minutes per task)
+        let taskTimers = {};
+        const TASK_TIME_LIMIT = 900; // 15 minutes in seconds
+
+        function startTaskTimer(taskNum) {
+            if (taskTimers[taskNum]) return;
+
+            const timerElement = document.getElementById(`task${taskNum}Timer`);
+            if (!timerElement) return;
+
+            taskTimers[taskNum] = {
+                timeLeft: TASK_TIME_LIMIT,
+                startTime: Date.now(),
+                interval: setInterval(() => {
+                    taskTimers[taskNum].timeLeft--;
+                    const timeLeft = taskTimers[taskNum].timeLeft;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+
+                    timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                    // Warning at 30 seconds
+                    if (timeLeft === 30) {
+                        timerElement.style.color = '#ffa726';
+                        timerElement.classList.add('pulse');
+                        playSound(400, 100);
+                    }
+
+                    // Critical at 10 seconds
+                    if (timeLeft <= 10 && timeLeft > 0) {
+                        timerElement.style.color = '#ef5350';
+                        playSound(600, 50);
+                    }
+
+                    // Time's up
+                    if (timeLeft <= 0) {
+                        clearInterval(taskTimers[taskNum].interval);
+                        timerElement.textContent = 'TIME UP!';
+                        playSound(200, 500);
+                        // Deduct points for timeout
+                        addScore(-20);
+                    }
+                }, 1000)
+            };
+        }
+
+        function stopTaskTimer(taskNum) {
+            if (taskTimers[taskNum] && taskTimers[taskNum].interval) {
+                clearInterval(taskTimers[taskNum].interval);
+
+                // Calculate completion time
+                const completionTime = Math.floor((Date.now() - taskTimers[taskNum].startTime) / 1000);
+                const minutes = Math.floor(completionTime / 60);
+                const seconds = completionTime % 60;
+                const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                // Store completion time
+                taskTimers[taskNum].completionTime = timeString;
+
+                // Award bonus points for fast completion
+                const timeLeft = taskTimers[taskNum].timeLeft;
+                if (timeLeft > 600) {
+                    addScore(50); // Fast bonus - completed with 10+ minutes left
+                    showAchievement('⚡ Speed Demon', 'Completed with 10+ minutes left!');
+                } else if (timeLeft > 300) {
+                    addScore(25); // Good bonus - completed with 5+ minutes left
+                }
+            }
+        }
+
+        // Slide navigation
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            if (n >= totalSlides) n = totalSlides - 1;
+            if (n < 0) n = 0;
+
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === n) {
+                    slide.classList.add('active');
+                }
+            });
+
+            currentSlide = n;
+            updateNavigation();
+            updateProgress();
+
+            // Update final score on completion screen
+            if (n === totalSlides - 1) {
+                document.getElementById('finalScore').textContent = score;
+                document.getElementById('finalTime').textContent = document.getElementById('timerValue').textContent;
+            }
+        }
+
+        function nextSlide() {
+            playClick();
+            showSlide(currentSlide + 1);
+            if (currentSlide === 1) {
+                startTimer();
+            }
+        }
+
+        function prevSlide() {
+            playClick();
+            showSlide(currentSlide - 1);
+        }
+
+        function updateNavigation() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        function updateProgress() {
+            const progress = (currentSlide / (totalSlides - 1)) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Hint toggles
+        function toggleHint(hintId) {
+            playClick();
+            const hint = document.getElementById(hintId).parentElement;
+            hint.classList.toggle('revealed');
+            if (hint.classList.contains('revealed')) {
+                hint.classList.add('pulse');
+                setTimeout(() => hint.classList.remove('pulse'), 1000);
+            }
+        }
+
+        // Task checking functions
+        function checkTask1() {
+            const answer = document.getElementById('task1Input').value.toLowerCase().trim();
+            const feedback = document.getElementById('task1Feedback');
+            startTimer();
+            startTaskTimer(1);
+
+            if (answer === 'password') {
+                stopTaskTimer(1);
+                playSuccess();
+                const inputEl = document.getElementById('task1Input');
+                const rect = inputEl.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, '#81c784', 30);
+
+                feedback.className = 'feedback success';
+                feedback.textContent = `✅ CORRECT! You've unlocked the next mission file. Passwords are the first line of defense in cybersecurity! ⏱️ Time: ${taskTimers[1].completionTime}`;
+
+                completeTask();
+                showAchievement('🔓 Riddle Master', 'Solved the first riddle!');
+
+                setTimeout(() => nextSlide(), 2000);
+            } else {
+                playError();
+                feedback.className = 'feedback error';
+                feedback.textContent = '❌ Not quite. Think about what protects your online accounts...';
+                feedback.classList.add('shake');
+                setTimeout(() => feedback.classList.remove('shake'), 500);
+            }
+        }
+
+        function selectPet(petName) {
+            playClick();
+            document.getElementById('task2Input').value = petName + '123';
+            const petElements = document.querySelectorAll('.pet-name');
+            petElements.forEach(el => el.style.background = 'rgba(129, 199, 132, 0.1)');
+            event.target.style.background = 'rgba(129, 199, 132, 0.3)';
+        }
+
+        function checkTask2() {
+            const answer = document.getElementById('task2Input').value.trim();
+            const feedback = document.getElementById('task2Feedback');
+            startTaskTimer(2);
+
+            if (answer === 'Shadow123') {
+                stopTaskTimer(2);
+                playSuccess();
+                const inputEl = document.getElementById('task2Input');
+                const rect = inputEl.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, '#ffa726', 25);
+
+                feedback.className = 'feedback success';
+                feedback.textContent = `✅ FILE CRACKED! "${answer}" was indeed too weak. This is why strong, unique passwords matter! ⏱️ Time: ${taskTimers[2].completionTime}`;
+
+                completeTask();
+                showAchievement('💪 Password Cracker', 'Broke weak password security!');
+
+                setTimeout(() => nextSlide(), 2000);
+            } else {
+                playError();
+                feedback.className = 'feedback error';
+                feedback.textContent = '❌ Access denied. Try a pet name + 123...';
+                feedback.classList.add('shake');
+                setTimeout(() => feedback.classList.remove('shake'), 500);
+            }
+        }
+
+        function checkTask3() {
+            const answer = document.getElementById('task3Input').value.trim();
+            const feedback = document.getElementById('task3Feedback');
+            startTaskTimer(3);
+
+            if (answer === '!nt3rnet') {
+                stopTaskTimer(3);
+                playSuccess();
+                const inputEl = document.getElementById('task3Input');
+                const rect = inputEl.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, '#4fc3f7', 30);
+
+                feedback.className = 'feedback success';
+                feedback.textContent = `✅ EXCELLENT DETECTIVE WORK! You found the hidden password. Digital forensics saves the day! ⏱️ Time: ${taskTimers[3].completionTime}`;
+
+                completeTask();
+                showAchievement('🔍 Digital Detective', 'Uncovered hidden evidence!');
+
+                setTimeout(() => nextSlide(), 2000);
+            } else {
+                playError();
+                feedback.className = 'feedback error';
+                feedback.textContent = '❌ Look more carefully at the image. What\'s written on that sticky note?';
+                feedback.classList.add('shake');
+                setTimeout(() => feedback.classList.remove('shake'), 500);
+            }
+        }
+
+        function checkTask4() {
+            const answer = document.getElementById('task4Input').value.trim();
+            const feedback = document.getElementById('task4Feedback');
+            startTaskTimer(4);
+
+            if (answer === 'Aurora_K3y_2028' || answer === 'aurora_k3y_2028') {
+                stopTaskTimer(4);
+                playSuccess();
+                const inputEl = document.getElementById('task4Input');
+                const rect = inputEl.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, '#ef5350', 25);
+
+                feedback.className = 'feedback success';
+                feedback.textContent = `✅ FOUND IT! Log analysis is crucial for incident response. You're becoming a true cyber defender! ⏱️ Time: ${taskTimers[4].completionTime}`;
+
+                completeTask();
+                showAchievement('📊 Log Master', 'Found the needle in the haystack!');
+
+                setTimeout(() => nextSlide(), 2000);
+            } else {
+                playError();
+                feedback.className = 'feedback error';
+                feedback.textContent = '❌ Keep searching the logs. Look for failed login attempts with exposed credentials...';
+                feedback.classList.add('shake');
+                setTimeout(() => feedback.classList.remove('shake'), 500);
+            }
+        }
+
+        function checkTask5() {
+            const answer = document.getElementById('task5Input').value.toLowerCase().trim();
+            const feedback = document.getElementById('task5Feedback');
+            startTaskTimer(5);
+
+            // HDGJWXJHZWNYD shifted back by 5 = CYBERSECURITY
+            if (answer === 'cybersecurity') {
+                stopTaskTimer(5);
+                playSuccess();
+                const inputEl = document.getElementById('task5Input');
+                const rect = inputEl.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, '#ffb74d', 40);
+
+                feedback.className = 'feedback success';
+                feedback.textContent = `✅ CORRECT! You've decoded the cipher! CYBERSECURITY is the answer. Cryptography protects our most sensitive data! ⏱️ Time: ${taskTimers[5].completionTime}`;
+
+                completeTask();
+                showAchievement('🔐 Cipher Master', 'Successfully decoded the message!');
+
+                setTimeout(() => nextSlide(), 2500);
+            } else {
+                playError();
+                feedback.className = 'feedback error';
+                feedback.textContent = '❌ Not quite. Remember: shift each letter BACKWARD by 5 in the alphabet.';
+                feedback.classList.add('shake');
+                setTimeout(() => feedback.classList.remove('shake'), 500);
+            }
+        }
+
+        function checkTask6() {
+            const answer = document.getElementById('task6Input').value.trim();
+            const feedback = document.getElementById('task6Feedback');
+            startTaskTimer(6);
+
+            // Answer is R3cycl3 from the draft email
+            if (answer === 'R3cycl3' || answer === 'r3cycl3') {
+                stopTaskTimer(6);
+                playSuccess();
+                const inputEl = document.getElementById('task6Input');
+                const rect = inputEl.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, '#ffa726', 30);
+
+                feedback.className = 'feedback success';
+                feedback.textContent = `✅ CORRECT! R3cycl3 is the backdoor password! You recovered critical information from deleted files. Remember: deleted doesn't always mean gone forever! ⏱️ Time: ${taskTimers[6].completionTime}`;
+
+                completeTask();
+                showAchievement('🗑️ Dumpster Diver', 'Recovered deleted secrets!');
+
+                setTimeout(() => nextSlide(), 3000);
+            } else {
+                playError();
+                feedback.className = 'feedback error';
+                feedback.textContent = '❌ Incorrect password. Check the most recent email draft - it clearly states the new password!';
+                feedback.classList.add('shake');
+                setTimeout(() => feedback.classList.remove('shake'), 500);
+            }
+        }
+
+        function checkTask7() {
+            const answer = document.getElementById('task7Input').value.trim();
+            const feedback = document.getElementById('task7Feedback');
+            startTaskTimer(7);
+
+            if (answer === '7431') {
+                stopTaskTimer(7);
+                playSuccess();
+                createConfetti();
+                const inputEl = document.getElementById('task7Input');
+                const rect = inputEl.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, '#ef5350', 40);
+
+                feedback.className = 'feedback success';
+                feedback.textContent = `✅ 🎉 CORRECT! Door 7431 is the target! Lock screen notifications can leak sensitive information even when devices are locked. Always be careful what notifications you allow! ⏱️ Time: ${taskTimers[7].completionTime}`;
+
+                completeTask();
+                showAchievement('📱 Information Hunter', 'Found the hidden information!');
+
+                setTimeout(() => nextSlide(), 3000);
+            } else {
+                playError();
+                feedback.className = 'feedback error';
+                feedback.textContent = '❌ Incorrect door number. Look carefully at all the notifications - one of them has specific location details!';
+                feedback.classList.add('shake');
+                setTimeout(() => feedback.classList.remove('shake'), 500);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Initialize
+        updateNavigation();
+    </script>
+</body>
+</html>
