@@ -220,7 +220,7 @@
                     <p style="color: #81c784; font-size: 0.9em; margin-bottom: 15px;">
                         💡 Tip: Right-click the image and select "Open Image in New Tab" to see it at full resolution
                     </p>
-                    <img src="images/IMG_1074.jpeg" alt="Examine this image for hidden clues" style="max-width: 100%; border: 3px solid #4fc3f7; border-radius: 10px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.5); cursor: pointer;" onclick="window.open(this.src, '_blank')">
+                    <img src="images/IMG_1074.png" alt="Examine this image for hidden clues" style="max-width: 100%; border: 3px solid #4fc3f7; border-radius: 10px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.5); cursor: pointer;" onclick="window.open(this.src, '_blank')">
                 </div>
 
                 <div class="input-container">
@@ -506,7 +506,8 @@
                 </div>
 
                 <p style="margin-top: 20px;">
-                    <strong>This is a Caesar Cipher</strong> — letters are shifted a set number of spaces in the alphabet.
+                    <strong>What is a Caesar Cipher?</strong><br>
+                    A Caesar cipher is a simple encryption technique where each letter is shifted a certain number of positions in the alphabet. In this case, each letter has been shifted forward by 5, so you need to shift them backward by 5 to decode the message.
                 </p>
 
                 <!-- Manual Decoding Guide -->
@@ -1024,7 +1025,7 @@
             const feedback = document.getElementById('task3Feedback');
             startTaskTimer(3);
 
-            if (answer === '!nt3rnet') {
+            if (answer === '!nt3rneT') {
                 stopTaskTimer(3);
                 playSuccess();
                 const inputEl = document.getElementById('task3Input');
